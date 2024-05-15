@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff;
+}
+
+header {
+    background: rgb(0,212,255);
+    background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(191,0,168,1) 50%, rgba(0,212,255,1) 100%);
+    border-radius: 0px 0px 30px 30px;
+}
+
+.main-logo-text {
+    font-size: 3rem;
+    color: white;
+    -webkit-text-stroke: 2px black;
+}
+.link {
+
+}
+
+.text-end {
+    margin-right: 20px;
+}
+
+.logo {
+
+}
+
+.navbar {
+    
+}
+
+.RegSign {
+    display: flex;
+}
+
+.Registration {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#Button {
+    width: calc(auto);
+    color: black;
+    Background: white;
+    border: 2px solid black;
+    border-radius: 30px;
+}
