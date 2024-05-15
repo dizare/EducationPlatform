@@ -1,10 +1,15 @@
+using EducationPlatform.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<PlatformDbContext>(opt => opt.UseNpgsql
+         (builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
-
+app.UseDeveloperExceptionPage();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -22,5 +27,4 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 app.Run();
