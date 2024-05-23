@@ -1,0 +1,108 @@
+$block: '.title';
+
+#{$block} {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    min-height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        background-color: var(--g-color-text-info-heavy);
+        border-bottom: 2px solid var(--g-color-text-primary);
+        height: 70px;
+    }
+
+    &__main-header-text{
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-right: 2px solid var(--g-color-text-primary);
+        border-left: 2px solid var(--g-color-text-primary);
+        border-radius: var(--g-border-radius-xl);
+        
+    }
+
+    &__theme-button {
+        display: inline-block;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 10px;
+    }
+
+    &__main-div{
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+    }
+    &__button-switch {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 30px;
+    }
+    
+    &__button-switch .yui-button_view_normal {
+        background-color: #4caf50; /* Цвет выбранной кнопки */
+        color: white;
+    }
+    
+    &__button-switch .yui-button_view_outlined {
+        background-color: white;
+        color: #4caf50;
+        border: 2px solid #4caf50;
+    }
+
+
+    &__signup{
+        display: flex;
+        margin-top: 250px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__form-main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    &__form-button{
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    &__layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        margin-bottom: 56px;
+    }
+
+
+    &__logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    &__text{
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        width: 400px;
+        
+    }
+}
