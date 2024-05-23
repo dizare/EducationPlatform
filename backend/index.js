@@ -1,8 +1,11 @@
 import express from "express"
 import router from './routes/mainRouter.js'
+import dotenv from 'dotenv'
+import { establishConnection } from "./databaseConnectionEstablisher.js"
 
+dotenv.config({path: ['.env.local', '.env']})
 const app = express()
-const port = 8080
+const port = process.env.SERVICE_PORT
 
 app.use(express.json({ extended: true }))
 
@@ -15,7 +18,7 @@ app.use((req, res, next) => {
 //API requests
 app.use('/api', router)
 
-
 app.listen(port, () => {
+    establishConnection()
     console.log(`Example app listening on port ${port}`)
 })
