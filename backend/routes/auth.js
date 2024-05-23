@@ -1,10 +1,6 @@
 import Router from "express"
 const authRouter = new Router()
 
-authRouter.use((req, res, next) => {
-    console.log('AUTH MIDDLEWARE')
-    next()
-})
 
 authRouter.post('/', async (req, res) => {
     const { id, surname, name } = req.body
