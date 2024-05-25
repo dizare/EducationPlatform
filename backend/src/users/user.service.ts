@@ -1,6 +1,5 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { mapDTOtoDomain } from './user.converter';
 import { UserDTO } from './user.dto';
@@ -21,25 +20,23 @@ export class UsersService {
     return this.usersRepository.existsBy({email})
   }
 
+  findByEmail(email: string): Promise<User> {
+    return this.usersRepository.findOneBy({email: email})
+  }
+
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id)
   }
 
-  async save(user: UserDTO): Promise<User | string> {
+  async save(user: UserDTO): Promise<User> {
     if (await this.existsByEmail(user.email)) 
-      throw new BadRequestException(`User with email=${user.email} already exists`) 
+      throw new ConflictException(`User with email=${user.email} already exists`)
     try {
-      let savedUser = await mapDTOtoDomain(user).then((value) => this.usersRepository.save(value))
-      return savedUser
+      return await mapDTOtoDomain(user)
+        .then((value) => this.usersRepository.save(value))
     } catch (error) {
       console.log(error)
       throw new InternalServerErrorException(`Unexpected server error occured`)
     }
   }
-
-  existsByEmailAndPassword(email: string, password: string) : Promise<boolean>{
-    return this.usersRepository.findOneBy({email: email})
-      .then(user => user.password)
-      .then(foundPassword => bcrypt.compare(password, foundPassword));
-    }
 }
