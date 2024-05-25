@@ -1,6 +1,5 @@
 .main-body{
-    background-color: #1f2833;
-    
+  background-color: #1f2833;
   min-height: 100vh;
   margin: 0;
 }
@@ -8,7 +7,6 @@
     display: flex;
     flex-direction: row;
     background-color: rgb(2, 37, 53);
-    border-bottom: 2px solid rgb(2, 37, 53);
     height: 70px;
 }
 
@@ -24,6 +22,40 @@
 
 .main-h1{
     color: white;
+}
+
+.profile-h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(2, 37, 53);
+    border-radius: 10px;
+}
+
+.profile-menu{
+    margin: 40px;
+    margin-top: 80px;
+    display: flex;
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.profile-menu-buttons{
+    margin-top: 50px;
+    min-width: 350px;
+    background-color: rgb(2, 37, 53);
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.profile-menu-window{
+    background-color: rgb(2, 37, 53);
+    border-radius: 10px;
+    position: relative;
+    left:50px;
 }
 
 .theme-button {
