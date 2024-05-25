@@ -20,5 +20,5 @@ app.use('/api', router)
 
 app.listen(port, () => {
     establishConnection()
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Educational Platform listening on port ${port}`)
 })
