@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { mapDTOtoDomain } from './user.converter';
@@ -30,13 +30,13 @@ export class UsersService {
 
   async save(user: UserDTO): Promise<User> {
     if (await this.existsByEmail(user.email)) 
-      throw new ConflictException(`User with email=${user.email} already exists`)
+      throw new ConflictException(Array.of(`Пользователь с почтой ${user.email} уже существует`))
     try {
       return await mapDTOtoDomain(user)
         .then((value) => this.usersRepository.save(value))
     } catch (error) {
       console.log(error)
-      throw new InternalServerErrorException(`Unexpected server error occured`)
+      throw new InternalServerErrorException(Array.of(`Непредвиденная ошибка на стороне сервера`))
     }
   }
 }

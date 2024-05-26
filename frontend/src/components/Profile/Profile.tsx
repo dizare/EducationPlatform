@@ -1,21 +1,33 @@
-import React, { useState } from "react";
-import {
-  Outlet,
-  Route,
-  Routes,
-  useNavigate,
-  useResolvedPath,
-} from "react-router-dom";
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
+import { Outlet, useNavigate, useResolvedPath } from "react-router-dom";
+import { authContext } from "../../context/authContext";
 import "./Profile.scss";
-import Info from "./ProfileInfo";
-import ProfileInfo from "./ProfileInfo";
-import Courses from "./Courses";
+import { IUser } from "./IUser";
 
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
 
+  const { logout, token } = useContext(authContext);
+  const [profile, setProfile] = React.useState<IUser>();
+
   let path = useResolvedPath("").pathname;
 
+  useEffect(() => {
+    getProfile();
+  }, []);
+  const getProfile = async () => {
+    await axios
+      .create({ baseURL: "http://localhost:8080" })
+      .get("/api/auth/profile", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        setProfile(response.data);
+      });
+  };
   return (
     <body className="main-body">
       <script
@@ -63,12 +75,14 @@ export const Profile: React.FC = () => {
                 >
                   Настройки
                 </button>
-                <button className="btn btn-primary">Выход</button>
+                <button className="btn btn-primary" onClick={logout}>
+                  Выход
+                </button>
               </div>
             </div>
           </div>
           <div className="profile-menu-window" style={{ color: "white" }}>
-            <Outlet />
+            <Outlet context={profile} />
           </div>
         </div>
       </div>

@@ -18,18 +18,26 @@ export class AuthService {
         return mapDomainToDTO(await finalUser)
     }
 
-    async signIn(@Body() userDto: UserLoginDTO) : Promise<{access_token: string}> {
+    async signIn(@Body() userDto: UserLoginDTO) : Promise<{access_token: string, user: any}> {
         const foundUser = await this.userService.findByEmail(userDto.email)
         if (foundUser != null) {
-            if (bcrypt.compare(userDto.password, foundUser.password)) {
-                let payload = { sub: foundUser.id, username: foundUser.email }
+            if (await bcrypt.compare(userDto.password, foundUser.password) == true) {
+                let payload = { sub: foundUser.id, email: foundUser.email, firstName: foundUser.firstName, lastName: foundUser.lastName, role: foundUser.role }
                 return {
-                    access_token: await this.jwtService.signAsync(payload)
+                    access_token: (await this.jwtService.signAsync(payload)),
+                    user: {
+                        userId: foundUser.id,
+                        email: foundUser.email
+                    }
                 }
             } else {
-                throw new UnauthorizedException('Password incorrect')
+                throw new UnauthorizedException(Array.of('Неверный пароль'))
             }
         }
-        throw new NotFoundException(`User with email=${userDto.email} not found`)
+        throw new NotFoundException(Array.of(`Пользователь с почтой ${userDto.email} не найден`))
+    }
+
+    async getProfile(userId): Promise<UserDTO> {
+        return mapDomainToDTO(await this.userService.findOneById(userId))
     }
 }

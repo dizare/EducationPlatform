@@ -1,32 +1,122 @@
-import React, { useState } from "react";
-
-import axios from "axios";
+import React, { useContext, useState } from "react";
+import { ReactNotifications, Store } from "react-notifications-component";
 import "./Title.scss";
-
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { authContext } from "../../context/authContext";
 
 export type AppProps = {
   children: React.ReactNode;
 };
 
 export const Title: React.FC<AppProps> = ({}) => {
-  const [login, setLogin] = useState({
-    Name: "",
-    SecondName: "",
+  const [regForm, setRegForm] = useState({
+    FirstName: "",
+    LastName: "",
+    Email: "",
+    Password: "",
+    Role: "",
+  });
+  const [loginForm, setLoginForm] = useState({
     Email: "",
     Password: "",
   });
-  const [selected, setSelected] = useState("register");
+
+  const [selected, setSelectedType] = useState("register");
+  const [selectedRole, setSelectedRole] = useState("student");
+
+  const { login } = useContext(authContext);
 
   const handleSelect = (option: "register" | "login") => {
-    setSelected(option);
+    setSelectedType(option);
   };
-  const fetchData = async () => {
-    try {
-      console.log(await axios.post("https://localhost:8080/profile", login));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+
+  const roleSelect = (option: "student" | "teacher") => {
+    setRegForm({ ...regForm, Role: option });
+  };
+
+  const fetchRegistration = async () => {
+    console.log(regForm);
+    await axios
+      .create({ baseURL: "http://localhost:8080" })
+      .post(
+        "/api/auth/register",
+        {
+          email: regForm.Email,
+          lastName: regForm.LastName,
+          firstName: regForm.FirstName,
+          password: regForm.Password,
+          role: regForm.Role,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Good response, registering");
+        login(response.data.access_token);
+      })
+      .catch((err) => {
+        for (let i = 0; i < err.response.data.message.length; i++) {
+          Store.addNotification({
+            title: "Ошибка",
+            message: err.response.data.message[i],
+            type: "danger",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true,
+            },
+          });
+        }
+        console.error(err.response.data.message);
+      });
+  };
+
+  const fetchLogin = async (e: React.FormEvent) => {
+    console.log(loginForm);
+    await axios
+      .create({ baseURL: "http://localhost:8080" })
+      .post(
+        "/api/auth/login",
+        {
+          email: loginForm.Email,
+          password: loginForm.Password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Good response, loging in");
+        login(response.data.access_token);
+      })
+      .catch((err) => {
+        var errorMessages = err.response.data.message;
+        for (let i = 0; i < errorMessages.length; i++) {
+          Store.addNotification({
+            title: "Ошибка",
+            message: errorMessages[i],
+            type: "danger",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true,
+            },
+          });
+        }
+        console.error(err.response.data.message);
+      });
   };
 
   return (
@@ -40,6 +130,7 @@ export const Title: React.FC<AppProps> = ({}) => {
         <div className="main-header-text">Образовательная платформа</div>
       </header>
       <div className="main-div">
+        <ReactNotifications />
         <div className="signup">
           <h1 className="main-h1">Добро пожаловать!</h1>
           <div className="button-switch">
@@ -79,15 +170,45 @@ export const Title: React.FC<AppProps> = ({}) => {
           </div>
           {selected === "register" ? (
             <div className="form-main">
+              <div
+                className="btn-group"
+                style={{ padding: "10px" }}
+                role="group"
+                aria-label="Basic radio toggle button group"
+              >
+                <input
+                  type="radio"
+                  className="btn-check"
+                  name="btnradio"
+                  id="btnradio1"
+                  autoComplete="off"
+                  onChange={(e) => roleSelect("student")}
+                />
+                <label className="btn btn-outline-primary" htmlFor="btnradio1">
+                  Ученик
+                </label>
+
+                <input
+                  type="radio"
+                  className="btn-check"
+                  name="btnradio"
+                  id="btnradio2"
+                  autoComplete="off"
+                  onChange={() => roleSelect("teacher")}
+                />
+                <label className="btn btn-outline-primary" htmlFor="btnradio2">
+                  Преподаватель
+                </label>
+              </div>
               <form>
                 <div className="mb-3">
                   <input
                     type="text"
                     className="form-control"
                     placeholder="Имя"
-                    value={login.Name}
+                    value={regForm.FirstName}
                     onChange={(e) =>
-                      setLogin({ ...login, Name: e.target.value })
+                      setRegForm({ ...regForm, FirstName: e.target.value })
                     }
                   />
                 </div>
@@ -96,9 +217,9 @@ export const Title: React.FC<AppProps> = ({}) => {
                     type="text"
                     className="form-control"
                     placeholder="Фамилия"
-                    value={login.SecondName}
+                    value={regForm.LastName}
                     onChange={(e) =>
-                      setLogin({ ...login, SecondName: e.target.value })
+                      setRegForm({ ...regForm, LastName: e.target.value })
                     }
                   />
                 </div>
@@ -107,9 +228,9 @@ export const Title: React.FC<AppProps> = ({}) => {
                     type="email"
                     className="form-control"
                     placeholder="Почта"
-                    value={login.Email}
+                    value={regForm.Email}
                     onChange={(e) =>
-                      setLogin({ ...login, Email: e.target.value })
+                      setRegForm({ ...regForm, Email: e.target.value })
                     }
                   />
                 </div>
@@ -118,9 +239,9 @@ export const Title: React.FC<AppProps> = ({}) => {
                     type="password"
                     className="form-control"
                     placeholder="Пароль"
-                    value={login.Password}
+                    value={regForm.Password}
                     onChange={(e) =>
-                      setLogin({ ...login, Password: e.target.value })
+                      setRegForm({ ...regForm, Password: e.target.value })
                     }
                   />
                 </div>
@@ -128,7 +249,7 @@ export const Title: React.FC<AppProps> = ({}) => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={fetchData}
+                    onClick={fetchRegistration}
                   >
                     Зарегистрироваться
                   </button>
@@ -136,6 +257,7 @@ export const Title: React.FC<AppProps> = ({}) => {
               </form>
             </div>
           ) : (
+            // Логин
             <div className="form-main">
               <form>
                 <div className="mb-3">
@@ -143,9 +265,9 @@ export const Title: React.FC<AppProps> = ({}) => {
                     type="email"
                     className="form-control"
                     placeholder="Почта"
-                    value={login.Email}
+                    value={loginForm.Email}
                     onChange={(e) =>
-                      setLogin({ ...login, Email: e.target.value })
+                      setLoginForm({ ...loginForm, Email: e.target.value })
                     }
                   />
                 </div>
@@ -154,9 +276,9 @@ export const Title: React.FC<AppProps> = ({}) => {
                     type="password"
                     className="form-control"
                     placeholder="Пароль"
-                    value={login.Password}
+                    value={loginForm.Password}
                     onChange={(e) =>
-                      setLogin({ ...login, Password: e.target.value })
+                      setLoginForm({ ...loginForm, Password: e.target.value })
                     }
                   />
                 </div>
@@ -164,7 +286,7 @@ export const Title: React.FC<AppProps> = ({}) => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={fetchData}
+                    onClick={fetchLogin}
                   >
                     Войти
                   </button>

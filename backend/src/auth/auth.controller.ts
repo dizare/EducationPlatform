@@ -12,18 +12,21 @@ export class AuthController {
     @Public()
     @Post('register')
     async signUp(@Body() userDto: UserDTO): Promise<UserDTO> {
+        console.log(`Register method invocation: ${userDto}`)
         return this.authService.signUp(userDto);
     }
 
     @Public()
     @Post('login')
     async signIn(@Body() userDto: UserLoginDTO) : Promise<{access_token: string}> {
-        return this.authService.signIn(userDto);
+        console.log(`Login method invocation: ${userDto}`)
+        return this.authService.signIn(userDto)
     }
 
-    @UseGuards(AuthGuard)
     @Get('profile')
-    async getProfile(@Request() req) {
-        return req.user;
+    async getProfile(@Request() req): Promise<UserDTO> {
+        console.log(`Profile method invocation`)
+        console.log(req.user.sub)
+        return this.authService.getProfile(req.user.sub)
     }
 }

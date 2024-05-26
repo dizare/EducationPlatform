@@ -3,11 +3,12 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  constructor(firstName: string, lastName: string, email: string, password: string) {
+  constructor(firstName: string, lastName: string, email: string, password: string, role: string) {
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
+    this.role = role;
   }
 
   @PrimaryGeneratedColumn()
@@ -21,6 +22,9 @@ export class User {
 
   @Column({unique: true})
   email: string;
+
+  @Column({nullable: true})
+  role: string;
 
   @MinLength(8)
   @Column()

@@ -6,9 +6,9 @@ export class UserLoginDTO {
         this.password = password;
       }
 
-    @IsEmail({}, {message: "Email is not valid"})
+    @IsEmail({}, {message: "Почта некорректна"})
     email: string;
 
-    @MinLength(8, {message: "Password length should be >=8"})
+    @MinLength(8, {message: "Длина пароля должна быть >= 8"})
     password: string;
 }
