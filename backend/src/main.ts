@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     errorHttpStatusCode: HttpStatus.FORBIDDEN
   }));
-  await app.listen(3000);
+  await app.listen(process.env.SERVICE_PORT);
 }
 
 bootstrap();
