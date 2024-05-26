@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { ReactNotifications, Store } from "react-notifications-component";
 import "./Title.scss";
-import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { authContext } from "../../context/authContext";
+import axiosInstance from "../../axiosConfig";
 
 export type AppProps = {
   children: React.ReactNode;
@@ -37,8 +37,7 @@ export const Title: React.FC<AppProps> = ({}) => {
 
   const fetchRegistration = async () => {
     console.log(regForm);
-    await axios
-      .create({ baseURL: "http://localhost:8080" })
+    await axiosInstance
       .post(
         "/api/auth/register",
         {
@@ -74,14 +73,13 @@ export const Title: React.FC<AppProps> = ({}) => {
             },
           });
         }
-        console.error(err.response.data.message);
+        console.error(err);
       });
   };
 
   const fetchLogin = async (e: React.FormEvent) => {
     console.log(loginForm);
-    await axios
-      .create({ baseURL: "http://localhost:8080" })
+    await axiosInstance
       .post(
         "/api/auth/login",
         {
@@ -115,7 +113,7 @@ export const Title: React.FC<AppProps> = ({}) => {
             },
           });
         }
-        console.error(err.response.data.message);
+        console.error(errorMessages);
       });
   };
 

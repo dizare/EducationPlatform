@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useAuth = () => {
   const [token, setToken] = useState(null);
@@ -20,7 +20,7 @@ export const useAuth = () => {
   useEffect(() => {
     console.log(localStorage.getItem("token"))
     const data = localStorage.getItem("token");
-    if (data) {
+    if (data != null && data != 'undefined') {
       login(data);
     }
     setIsReady(true);

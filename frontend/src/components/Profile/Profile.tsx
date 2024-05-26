@@ -1,14 +1,15 @@
-import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { Outlet, useNavigate, useResolvedPath } from "react-router-dom";
+import axiosInstance from "../../axiosConfig";
 import { authContext } from "../../context/authContext";
-import "./Profile.scss";
 import { IUser } from "./IUser";
+import "./Profile.scss";
 
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
 
   const { logout, token } = useContext(authContext);
+
   const [profile, setProfile] = React.useState<IUser>();
 
   let path = useResolvedPath("").pathname;
@@ -17,8 +18,7 @@ export const Profile: React.FC = () => {
     getProfile();
   }, []);
   const getProfile = async () => {
-    await axios
-      .create({ baseURL: "http://localhost:8080" })
+    await axiosInstance
       .get("/api/auth/profile", {
         headers: {
           Authorization: "Bearer " + token,

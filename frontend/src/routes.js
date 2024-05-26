@@ -6,6 +6,7 @@ import { Settings } from "./components/Profile/Settings";
 import { Title } from './components/Title';
 
 import { Courses } from "./components/Profile/Courses";
+import { CreateCourse } from "./components/Courses/CreateCourse";
 
 export const useRoutes = (isLogin) => {
 
@@ -19,7 +20,8 @@ export const useRoutes = (isLogin) => {
                     <Route path="settings" element={<Settings />} />
                     <Route path='*' element={<Navigate to="/profile/info" replace />} />
                 </Route>
-                <Route path='*' element={<Navigate to="/profile" replace />} />
+                <Route path='*' element={<Navigate to="/profile/" replace />} />
+                <Route path="/create-course" element={<CreateCourse />} />
             </Routes>
         )
     } else {
@@ -30,5 +32,4 @@ export const useRoutes = (isLogin) => {
             </Routes>
         )
     }
-
 };

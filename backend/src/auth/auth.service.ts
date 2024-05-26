@@ -13,9 +13,21 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async signUp(@Body() userDto: UserDTO): Promise<UserDTO> {
-        var finalUser = this.userService.save(userDto)
-        return mapDomainToDTO(await finalUser)
+    async signUp(@Body() userDto: UserDTO): Promise<{access_token: string, user: any}> {
+        try {
+            var finalUser = await this.userService.save(userDto)
+            let payload = { sub: finalUser.id, email: finalUser.email, firstName: finalUser.firstName, lastName: finalUser.lastName, role: finalUser.role }
+            return {
+                access_token: (await this.jwtService.signAsync(payload)),
+                user: {
+                    userId: finalUser.id,
+                    email: finalUser.email
+                }
+            }
+    }
+    catch{
+        console.log('pizda')
+    }
     }
 
     async signIn(@Body() userDto: UserLoginDTO) : Promise<{access_token: string, user: any}> {

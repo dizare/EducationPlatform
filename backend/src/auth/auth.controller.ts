@@ -11,7 +11,7 @@ export class AuthController {
     
     @Public()
     @Post('register')
-    async signUp(@Body() userDto: UserDTO): Promise<UserDTO> {
+    async signUp(@Body() userDto: UserDTO): Promise<{access_token: string}> {
         console.log(`Register method invocation: ${userDto}`)
         return this.authService.signUp(userDto);
     }

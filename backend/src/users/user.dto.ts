@@ -21,5 +21,6 @@ export class UserDTO {
     @MinLength(8, {message: "Длина пароля должна быть >= 8"})
     password: string;
 
+    @IsNotEmpty({message: "Выберите свою роль"})
     role: string;
 }
