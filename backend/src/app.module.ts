@@ -6,9 +6,13 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/user.module';
 import { CourseModule } from './courses/course.module';
+import { JdoodleModule } from './jdoodle/jDoodleApi.module';
+import { TaskModule } from './tasks/task.module';
+import { ChapterModule } from './chapters/chapter.module';
 
 @Module({
   imports: [
+    
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env.local'
@@ -27,6 +31,10 @@ import { CourseModule } from './courses/course.module';
       }),
       inject: [ConfigService]
     }),
+    TaskModule,
+    ChapterModule,
+    CourseModule,
+    JdoodleModule,
     UsersModule,
     AuthModule,
     CourseModule

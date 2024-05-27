@@ -7,6 +7,7 @@ import { Title } from './components/Title';
 
 import { Courses } from "./components/Profile/Courses";
 import { CreateCourse } from "./components/Courses/CreateCourse";
+import CreateChapter from './components/Courses/CreateChapter';
 
 export const useRoutes = (isLogin) => {
 

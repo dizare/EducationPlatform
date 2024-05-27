@@ -1,18 +1,36 @@
-import { Controller, Get, Param, Query } from "@nestjs/common";
-import { CoursesService } from "./course.service";
-import { Course } from "./course.entity";
+import { Controller, Get, Post, Body, Param, Put, Delete, Request } from '@nestjs/common';
+import { CourseService } from './course.service';
+import { CourseDTO } from './course.dto';
+import { Course } from './course.entity';
+import { Public } from 'src/app.noguard.decorator';
 
 @Controller('courses')
-export class CourseController{
-    constructor(private readonly courseService: CoursesService) {}
+export class CourseController {
+  constructor(private readonly courseService: CourseService) {}
 
-  @Get('getById/:id')
-  getUserParam(@Param() params: any): Promise<Course> {
-    return this.courseService.findOneById(params.id)
+  @Public()
+  @Post('createCourse')
+  async create(@Body() courseDto: CourseDTO): Promise<Course> {
+    return this.courseService.create(courseDto);
   }
 
-  @Get('getById')
-  getUserQuery(@Query('id') id: number) {
-    return `String: ${id}`
+  @Get()
+  async findAll(): Promise<Course[]> {
+    return this.courseService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Course> {
+    return this.courseService.findOne(Number(id));
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() courseDto: CourseDTO): Promise<Course> {
+    return this.courseService.update(Number(id), courseDto);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<void> {
+    this.courseService.remove(Number(id));
   }
 }

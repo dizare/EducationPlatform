@@ -1,26 +1,36 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Chapter } from '../chapters/chapter.entity';
 
 @Entity()
 export class Course {
-    constructor(name: string, theme: string, num_of_task: number, author: string){
-        this.name = name;
-        this.theme = theme;
-        this.num_of_task = num_of_task;
-        this.author = author;
-    }
+  constructor(
+    name: string,
+    theme: string,
+    totalTasks: number,
+    author: string,
+  ) {
+    this.name = name;
+    this.theme = theme;
+    this.totalTasks = totalTasks;
+    this.author = author;  
+  }
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    theme: string;
+  @Column()
+  theme: string;
 
-    @Column()
-    num_of_task: number;
+  @Column({ default: 0 })
+  totalTasks: number;
 
-    @Column()
-    author: string;
+  @Column()  // Добавляем колонку для автора
+  author: string;
+
+  @ManyToMany(() => Chapter)
+  @JoinTable()
+  chapters: Chapter[];
 }

@@ -1,22 +1,22 @@
-import { IsNotEmpty, isNotEmpty } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 
-export class CourseDTO{
-    constructor(name: string, theme: string, num_of_task: number, author: string){
-        this.name = name;
-        this.theme = theme;
-        this.num_of_task = num_of_task;
-        this.author = author;
-    }
+export class CourseDTO {
+  constructor(name: string, theme: string, num_of_task: number, author: string) {
+    this.name = name;
+    this.theme = theme;
+    this.num_of_task = num_of_task;
+    this.author = author;
+  }
 
-    @IsNotEmpty({message: ""})
-    name: string;
+  @IsNotEmpty({ message: "Name is required" })
+  name: string;
 
-    @IsNotEmpty({message: ""})
-    theme: string;
+  @IsNotEmpty({ message: "Theme is required" })
+  theme: string;
 
-    @IsNotEmpty({message: ""})
-    num_of_task: number;
+  @IsNotEmpty()
+  num_of_task: number;
 
-    @IsNotEmpty({message: ""})
-    author: string;
+  @IsNotEmpty({ message: "Author is required" })
+  author: string;
 }

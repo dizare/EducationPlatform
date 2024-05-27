@@ -1,0 +1,54 @@
+.body{
+  background-color: #1f2833;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.main-text{
+    padding: 10px
+}
+
+.input-create-course{
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 10px;
+    gap: 10px;
+    
+    background-color: rgb(2, 37, 53);
+    border-radius: 20px;
+}
+
+.input-text{
+    color: white;
+}
+
+.add-task{
+    padding: 20px;
+    margin: 10px;
+    display:inline-flex;
+
+    background-color: rgb(2, 37, 53);
+    border-radius: 20px;
+}
+
+.add-task-text{
+    margin: 10px;
+    color: white;
+}
+.addForm{
+    background-color: rgb(2, 37, 53);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    margin-top: 20px;
+}
+
+.button-hz{
+    margin-top: 10px;
+}
+
+.form-control{
+    
+}
