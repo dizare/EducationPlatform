@@ -7,7 +7,7 @@ import { Title } from './components/Title';
 
 import { Courses } from "./components/Profile/Courses";
 import { CreateCourse } from "./components/Courses/CreateCourse";
-import CreateChapter from './components/Courses/CreateChapter';
+import { EditingCourse } from './components/Courses/EditingCourse';
 
 export const useRoutes = (isLogin) => {
 
@@ -21,8 +21,12 @@ export const useRoutes = (isLogin) => {
                     <Route path="settings" element={<Settings />} />
                     <Route path='*' element={<Navigate to="/profile/info" replace />} />
                 </Route>
+                <Route>
+                    <Route path="/create-course" element={<CreateCourse />} />
+                    <Route path="/editcourse/:id" element={<EditingCourse />} />
+                </Route>
                 <Route path='*' element={<Navigate to="/profile/" replace />} />
-                <Route path="/create-course" element={<CreateCourse />} />
+
             </Routes>
         )
     } else {

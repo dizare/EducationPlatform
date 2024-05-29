@@ -10,4 +10,7 @@ export class ChapterDTO {
 
   @IsNotEmpty({message: "Описание не может быть пустым"})
   description: string;
+
+  @IsNotEmpty({ message: 'Course ID is required' })
+  courseId: number;
 }

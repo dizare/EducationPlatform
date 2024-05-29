@@ -8,13 +8,14 @@ import { CourseDTO } from './course.dto';
 export class CourseService {
   constructor(
     @InjectRepository(Course)
-    private courseRepository: Repository<Course>,
+    private courseRepository: Repository<Course>
   ) {}
 
   async create(courseDto: CourseDTO): Promise<Course> {
     const course = new Course(
       courseDto.name,
       courseDto.theme,
+      courseDto.description,
       courseDto.num_of_task,
       courseDto.author,
     );
@@ -25,12 +26,12 @@ export class CourseService {
     return await this.courseRepository.find({ relations: ['chapters'] });
   }
 
-  async findOne(id: number): Promise<Course> {
-    return await this.courseRepository.findOne({ where: { id }, relations: ['chapters'] });
+  async findOneById(id: number): Promise<Course> {
+    return this.courseRepository.findOne({ where: { id }, relations: ['chapters'] });
   }
 
   async update(id: number, courseDto: CourseDTO): Promise<Course> {
-    const course = await this.courseRepository.findOneBy({ id });
+    const course = await this.courseRepository.findOne({ where: { id }, relations: ['chapters'] });
     if (!course) {
       throw new Error('Course not found');
     }

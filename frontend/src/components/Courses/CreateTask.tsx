@@ -1,4 +1,3 @@
-// CreateTask.tsx
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { ReactComponent as CheckText } from "./check-text-box.svg";
@@ -11,7 +10,13 @@ interface Props {
 
 const CreateTask: React.FC<Props> = ({ showForm, setShowForm }) => {
   return (
-    <Modal show={showForm} onHide={() => setShowForm(false)} size="xl">
+    <Modal
+      show={showForm}
+      onHide={() => setShowForm(false)}
+      size="xl"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title>
           <div className="input-group mb-3">
@@ -19,24 +24,14 @@ const CreateTask: React.FC<Props> = ({ showForm, setShowForm }) => {
               type="text"
               className="form-control"
               placeholder="Название"
-              aria-label="Recipient's username"
-              aria-describedby="button-addon2"
+              style={{ minWidth: "350px" }}
             />
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            >
-              <CheckText width="25" height="25" />
-            </button>
           </div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <label className="main-text">Текст задания</label>
         <textarea className="form-control" />
-        <label className="main-text">Ответ</label>
-        <input className="form-control"></input>
         <div className="App">
           <CodeEditor />
         </div>

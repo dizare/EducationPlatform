@@ -15,10 +15,10 @@ export class TaskService {
     return this.taskRepository.findOneBy({id});
   }
 
-  async create(taskDto: TaskDTO): Promise<Task> {
-    const task = this.taskRepository.create(taskDto);
+  async create(taskDto: TaskDTO, chapterId: number): Promise<Task> {
+    const task = this.taskRepository.create({ ...taskDto, chapter: { id: chapterId } });
     return await this.taskRepository.save(task);
-  }
+}
 
   async findAll(): Promise<Task[]> {
     return await this.taskRepository.find();

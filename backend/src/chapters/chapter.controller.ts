@@ -2,14 +2,16 @@ import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common'
 import { ChapterService } from './chapter.service';
 import { ChapterDTO } from './chapter.dto';
 import { Chapter } from './chapter.entity';
+import { Public } from 'src/app.noguard.decorator';
 
 @Controller('chapters')
 export class ChapterController {
   constructor(private readonly chapterService: ChapterService) {}
 
-  @Post()
-  async create(@Body() chapterDto: ChapterDTO): Promise<Chapter> {
-    return await this.chapterService.create(chapterDto);
+  @Public()
+  @Post('createChapter/:courseId')
+  async create(@Body() chapterDto: ChapterDTO, @Param('courseId') courseId: number): Promise<Chapter> {
+    return await this.chapterService.create(chapterDto, courseId);
   }
 
   @Get()
@@ -17,7 +19,16 @@ export class ChapterController {
     return await this.chapterService.findAll();
   }
 
-  @Get(':id')
+  @Public()
+  @Get('chapterByCourse/:id')
+  async findAllByCourse(@Param('id') courseId: string): Promise<Chapter[]> {
+  const courseIdNumber = parseInt(courseId, 10); // Преобразуем строку в число
+  return await this.chapterService.findAllByCourse(courseIdNumber);
+}
+
+
+  @Public()
+  @Get('chapter/:id')
   async findOne(@Param('id') id: string): Promise<Chapter> {
     return await this.chapterService.findOne(Number(id));
   }

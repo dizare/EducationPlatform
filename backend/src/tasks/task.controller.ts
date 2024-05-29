@@ -8,8 +8,8 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  async create(@Body() taskDto: TaskDTO): Promise<Task> {
-    return await this.taskService.create(taskDto);
+  async create(@Body() taskDto: TaskDTO, @Body('chapterId') chapterId: number): Promise<Task> {
+    return await this.taskService.create(taskDto, chapterId);
   }
 
   @Get()

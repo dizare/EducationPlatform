@@ -6,11 +6,13 @@ export class Course {
   constructor(
     name: string,
     theme: string,
+    description: string,
     totalTasks: number,
     author: string,
   ) {
     this.name = name;
     this.theme = theme;
+    this.description = description
     this.totalTasks = totalTasks;
     this.author = author;  
   }
@@ -23,6 +25,9 @@ export class Course {
 
   @Column()
   theme: string;
+
+  @Column()
+  description: string;
 
   @Column({ default: 0 })
   totalTasks: number;

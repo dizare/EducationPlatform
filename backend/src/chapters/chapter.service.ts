@@ -3,21 +3,33 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chapter } from './chapter.entity';
 import { ChapterDTO } from './chapter.dto';
+import { Course } from 'src/courses/course.entity';
 
 @Injectable()
 export class ChapterService {
+  courseService: any;
   constructor(
     @InjectRepository(Chapter)
     private chapterRepository: Repository<Chapter>,
+    @InjectRepository(Course)
+    private courseRepository: Repository<Course>,
   ) {}
 
-  async create(chapterDto: ChapterDTO): Promise<Chapter> {
-    const chapter = this.chapterRepository.create(chapterDto);
+  async create(chapterDto: ChapterDTO, courseId: number): Promise<Chapter> {
+    const course = await this.courseRepository.findOne({ where: { id: courseId } });
+    const chapter = new Chapter(chapterDto.name, chapterDto.description);
+    chapter.course = course;
     return await this.chapterRepository.save(chapter);
-  }
+}
+
+
 
   async findAll(): Promise<Chapter[]> {
     return await this.chapterRepository.find();
+  }
+
+  async findAllByCourse(courseId: number): Promise<Chapter[]> {
+    return await this.chapterRepository.find({ where: { course: { id: courseId } } });
   }
 
   async findOne(id: number): Promise<Chapter> {

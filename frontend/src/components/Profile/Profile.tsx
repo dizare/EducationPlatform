@@ -12,8 +12,6 @@ export const Profile: React.FC = () => {
 
   const [profile, setProfile] = React.useState<IUser>();
 
-  let path = useResolvedPath("").pathname;
-
   useEffect(() => {
     getProfile();
   }, []);

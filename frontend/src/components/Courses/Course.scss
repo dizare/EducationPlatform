@@ -2,6 +2,15 @@
   background-color: #1f2833;
   min-height: 100vh;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body-create-course{
+    background-color: #1f2833;
+  min-height: 100vh;
+  margin: 0;
 }
 
 .main-text{
@@ -9,13 +18,15 @@
 }
 
 .input-create-course{
-    max-width: 30%;
+    min-width: 30%;
+    width: 1000px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     padding: 20px;
     margin: 10px;
     gap: 10px;
-    
+
     background-color: rgb(2, 37, 53);
     border-radius: 20px;
 }
@@ -31,6 +42,39 @@
 
     background-color: rgb(2, 37, 53);
     border-radius: 20px;
+}
+
+.headerCreateCourse{
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    // padding: 10px;
+    border-bottom: 3px solid rgb(2, 37, 53);
+}
+
+.header-chapters{
+    display: flex;
+    gap: 10px;
+}
+
+.chapter-buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.chapter-created{
+    // display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    background-color: rgb(2, 53, 45);
+    border-radius: 20px;
+}
+
+.chapter{
+    margin-top: 10px;
 }
 
 .add-task-text{
@@ -49,6 +93,6 @@
     margin-top: 10px;
 }
 
-.form-control{
-    
+.button-create-chapter{
+    margin: 10px;
 }

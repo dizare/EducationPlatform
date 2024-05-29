@@ -33,10 +33,11 @@ const CodeEditor: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "20px" }}>
       <div>
         <div>
           {/* Редактор для ввода кода программы */}
+          <h1>ввод для проверки задания</h1>
           <Editor
             value={code}
             onValueChange={(code) => setCode(code)}
