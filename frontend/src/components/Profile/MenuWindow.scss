@@ -1,4 +1,78 @@
 .h1-border{
+    display: flex;
+    justify-content: center;
     padding: 5px;
     border-bottom: 3px solid #1f2833;
+    width: 100%;
+}
+
+
+.windows-menu-content{
+    gap: 5px;
+    min-width: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+  align-items: center;
+  justify-content: space-between;
+    width: 90%;
+    position: relative;
+    margin-bottom: 20px; /* Отступ снизу для демонстрации */
+}
+
+.input-container input {
+    flex: 1;
+    width: 100%; /* Ширина input */
+    padding: 10px; /* Внутренний отступ для текста внутри input */
+    box-sizing: border-box; /* Учитываем padding в ширине элемента */
+    margin-right: 10px; 
+}
+
+.input-container label {
+    position: absolute;
+    left: 10px; /* Положение label по горизонтали внутри input */
+    top: 50%; /* Положение label по вертикали внутри input */
+    transform: translateY(-50%); /* Центрирование label по вертикали */
+    pointer-events: none; /* Label не будет мешать кликам по input */
+    color: #aaa; /* Цвет label */
+    transition: 0.2s; /* Плавный переход для анимации */
+}
+
+/* Дополнительный стиль для input при фокусе */
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+    top: 12px;
+    left: 12px;
+    font-size: 12px;
+    color: rgb(2, 37, 53);
+}
+
+.edit-button {
+    padding: 0; /* Убираем внутренние отступы */
+    background: none; /* Убираем фон */
+    border: none; /* Убираем границу */
+    cursor: pointer;
+    display: flex; /* Для центрирования содержимого кнопки */
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-button svg {
+    width: 20px; /* Задаем размер иконки */
+    height: 20px;
+}
+
+.edit-button:hover {
+    color: rgb(2, 37, 53);
+}
+
+.button-edit{
+    position: absolute;
+    top: 52%;
+    transform: translateY(-50%);
+    right: 20px;
 }

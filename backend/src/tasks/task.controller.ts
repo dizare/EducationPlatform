@@ -7,7 +7,7 @@ import { Task } from './task.entity';
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
-  @Post()
+  @Post('createTask')
   async create(@Body() taskDto: TaskDTO, @Body('chapterId') chapterId: number): Promise<Task> {
     return await this.taskService.create(taskDto, chapterId);
   }

@@ -22,7 +22,7 @@ export const Courses: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="windows-menu-content">
       <h1 className="h1-border display-5">Курсы</h1>
       <div>
         {profile.role === "teacher" && (

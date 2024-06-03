@@ -23,6 +23,7 @@ export const Profile: React.FC = () => {
         },
       })
       .then((response) => {
+        console.log(response.data);
         setProfile(response.data);
       });
   };

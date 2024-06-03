@@ -6,7 +6,7 @@ export const Settings: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="windows-menu-content">
       <h1 className="h1-border display-5">Настройки</h1>
     </div>
   );
