@@ -12,20 +12,20 @@ export class TaskService {
   ) {}
 
   findOneById(id: number): Promise<Task | null> {
-    return this.taskRepository.findOneBy({id});
+    return this.taskRepository.findOneBy({ id });
   }
 
   async create(taskDto: TaskDTO, chapterId: number): Promise<Task> {
     const task = this.taskRepository.create({ ...taskDto, chapter: { id: chapterId } });
     return await this.taskRepository.save(task);
-}
+  }
 
   async findAll(): Promise<Task[]> {
     return await this.taskRepository.find();
   }
 
   async update(id: number, taskDto: TaskDTO): Promise<Task> {
-    const task = await this.taskRepository.findOneBy({id});
+    const task = await this.taskRepository.findOneBy({ id });
     if (!task) {
       throw new Error('Task not found');
     }

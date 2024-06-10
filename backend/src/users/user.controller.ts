@@ -7,6 +7,7 @@ import { Public } from 'src/app.noguard.decorator';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
+  @Public()
   @Get('getById/:id')
   getUserParam(@Param() params: any): Promise<User> {
     return this.userService.findOneById(params.id)

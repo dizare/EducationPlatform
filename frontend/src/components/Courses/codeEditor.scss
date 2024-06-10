@@ -1,0 +1,16 @@
+.code-window{
+    color: "#black";
+    background-Color: "#white";
+    border: 1px solid black;
+}
+
+.exampleCodeWindow{
+    display: inline-flex;
+    gap: 4vh;
+}
+.input-output-window{
+    display: flex;
+    flex-direction: column;
+    width: 56vh;
+
+}

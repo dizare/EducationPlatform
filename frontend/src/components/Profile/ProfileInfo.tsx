@@ -48,6 +48,9 @@ export const Info: React.FC = () => {
   return (
     <div className="windows-menu-content">
       <h1 className="h1-border display-5">Информация</h1>
+      <div>
+        <a>Вы - {profile.role === "teacher" ? "учитель" : "ученик"}</a>
+      </div>
       <div className="input-container">
         <input
           style={{ color: "black", marginTop: "3px" }}
@@ -82,9 +85,6 @@ export const Info: React.FC = () => {
             </button>
           </span>
         </div>
-      </div>
-      <div>
-        <input value={profile.role} disabled />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, JoinTable } from 'typeorm';
 import { Chapter } from '../chapters/chapter.entity';
 
 @Entity()
@@ -35,7 +35,6 @@ export class Course {
   @Column()  // Добавляем колонку для автора
   author: string;
 
-  @ManyToMany(() => Chapter)
-  @JoinTable()
+  @OneToMany(() => Chapter, chapter => chapter.course)
   chapters: Chapter[];
 }

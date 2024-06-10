@@ -39,7 +39,9 @@ export const EditingCourse: React.FC<Props> = ({ courseFormName }) => {
   };
 
   const openChapterForm = (chapter: IChapter) => {
+    console.log(chapter);
     setSelectedChapter(chapter);
+    setChapterId(chapter.id); // Устанавливаем chapterId для компонента CreateTask
     setShowChapterForm(true);
   };
 
@@ -71,7 +73,6 @@ export const EditingCourse: React.FC<Props> = ({ courseFormName }) => {
         }
       );
       setChapterData(response.data);
-      console.log(response.data.chapters);
     } catch (error) {
       console.error("Error fetching chapter data:", error);
     }
@@ -118,6 +119,7 @@ export const EditingCourse: React.FC<Props> = ({ courseFormName }) => {
           <CreateTask
             showForm={showChapterForm}
             setShowForm={setShowChapterForm}
+            chapterId={chapterId} // Передаем нужный chapterId
           />
         </div>
       </div>

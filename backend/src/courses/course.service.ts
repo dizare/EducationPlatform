@@ -30,6 +30,10 @@ export class CourseService {
     return this.courseRepository.findOne({ where: { id }, relations: ['chapters'] });
   }
 
+  async findByAuthor(author: string): Promise<Course[]> {
+    return this.courseRepository.find({ where: { author }, relations: ['chapters'] });
+  }
+
   async update(id: number, courseDto: CourseDTO): Promise<Course> {
     const course = await this.courseRepository.findOne({ where: { id }, relations: ['chapters'] });
     if (!course) {

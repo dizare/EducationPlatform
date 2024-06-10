@@ -3,7 +3,7 @@ import { Chapter } from '../chapters/chapter.entity';
 
 @Entity()
 export class Task {
-  constructor(name: string, description: string, input: string, output: string) {
+  constructor(name: string, description: string, input?: string, output?: string) {
     this.name = name;
     this.description = description;
     this.input = input;
@@ -19,12 +19,12 @@ export class Task {
   @Column()
   description: string;
 
-  @Column({nullable: true})
-  input: string;
+  @Column({ nullable: true })
+  input?: string;
 
-  @Column()
-  output: string;
-  
+  @Column({ nullable: true })
+  output?: string;
+
   @ManyToOne(() => Chapter, chapter => chapter.tasks)
   chapter: Chapter;
 }

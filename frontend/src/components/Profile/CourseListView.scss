@@ -1,0 +1,22 @@
+.index-course-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .index-course-list-element {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px; /* Уменьшил расстояние между элементами */
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px; /* Добавил отступы внутри кнопки */
+  }
+  
+  .index-course-list-element-inside {
+    overflow: hidden; /* Скрытие части содержимого, которое не помещается */
+    white-space: nowrap; /* Запрещает перенос строк */
+    text-overflow: ellipsis; /* Добавляет многоточие для обрезанных строк */
+  }
+  

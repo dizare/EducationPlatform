@@ -10,7 +10,7 @@ import { ICourse } from "./ICourse";
 export const CreateCourse: React.FC = () => {
   let navigate = useNavigate();
   const userId = useCurrentUserId();
-  const [createCourseData, createCourse] = React.useState<ICourse>({
+  const [createCourseData, createCourse] = React.useState({
     name: "",
     theme: "",
     description: "",

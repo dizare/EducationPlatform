@@ -3,11 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chapter } from './chapter.entity';
 import { ChapterDTO } from './chapter.dto';
-import { Course } from 'src/courses/course.entity';
+import { Course } from '../courses/course.entity';
 
 @Injectable()
 export class ChapterService {
-  courseService: any;
   constructor(
     @InjectRepository(Chapter)
     private chapterRepository: Repository<Chapter>,
@@ -16,28 +15,26 @@ export class ChapterService {
   ) {}
 
   async create(chapterDto: ChapterDTO, courseId: number): Promise<Chapter> {
-    const course = await this.courseRepository.findOne({ where: { id: courseId } });
+    const course = await this.courseRepository.findOne({ where: { id: courseId }, relations: ['chapters'] });
     const chapter = new Chapter(chapterDto.name, chapterDto.description);
     chapter.course = course;
     return await this.chapterRepository.save(chapter);
-}
-
-
+  }
 
   async findAll(): Promise<Chapter[]> {
     return await this.chapterRepository.find();
   }
 
   async findAllByCourse(courseId: number): Promise<Chapter[]> {
-    return await this.chapterRepository.find({ where: { course: { id: courseId } } });
+    return await this.chapterRepository.find({ where: { course: { id: courseId } }, relations: ['tasks'] });
   }
 
   async findOne(id: number): Promise<Chapter> {
-    return await this.chapterRepository.findOneBy({id});
+    return await this.chapterRepository.findOne({ where: { id }, relations: ['tasks'] });
   }
 
   async update(id: number, chapterDto: ChapterDTO): Promise<Chapter> {
-    const chapter = await this.chapterRepository.findOneBy({id});
+    const chapter = await this.chapterRepository.findOne({ where: { id }, relations: ['tasks'] });
     if (!chapter) {
       throw new Error('Chapter not found');
     }

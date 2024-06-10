@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Request } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CourseDTO } from './course.dto';
 import { Course } from './course.entity';
@@ -14,13 +14,20 @@ export class CourseController {
     return this.courseService.create(courseDto);
   }
 
-  @Get()
+  @Public()
+  @Get('allCourses')
   async findAll(): Promise<Course[]> {
     return this.courseService.findAll();
   }
+
+  @Get('userCourses')
+  async findByAuthor(@Request() req): Promise<Course[]> {
+    const author = req.user.id;  // Предполагается, что id пользователя хранится в req.user.id
+    return this.courseService.findByAuthor(author);
+  }
   
   @Public()
-  @Get('course/:id')
+  @Get('course/:id')  
   async editCourse(@Param('id') id: string): Promise<Course> {
     return this.courseService.findOneById(Number(id));
 }
