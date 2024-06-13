@@ -119,7 +119,8 @@ export const EditingCourse: React.FC<Props> = ({ courseFormName }) => {
           <CreateTask
             showForm={showChapterForm}
             setShowForm={setShowChapterForm}
-            chapterId={chapterId} // Передаем нужный chapterId
+            chapterId={chapterId}
+            courseId={courseData?.id}
           />
         </div>
       </div>

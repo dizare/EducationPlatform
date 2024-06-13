@@ -9,6 +9,8 @@ import { CourseModule } from './courses/course.module';
 import { JdoodleModule } from './jdoodle/jDoodleApi.module';
 import { TaskModule } from './tasks/task.module';
 import { ChapterModule } from './chapters/chapter.module';
+import { ResultModule } from './result/result.module';
+import { UserResultModule } from './userResult/userResult.module';
 
 @Module({
   imports: [
@@ -37,7 +39,9 @@ import { ChapterModule } from './chapters/chapter.module';
     JdoodleModule,
     UsersModule,
     AuthModule,
-    CourseModule
+    CourseModule,
+    ResultModule,
+    UserResultModule
   ],
   controllers: [AppController],
   providers: [AppService],

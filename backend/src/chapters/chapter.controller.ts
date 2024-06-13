@@ -14,6 +14,7 @@ export class ChapterController {
     return await this.chapterService.create(chapterDto, courseId);
   }
 
+  @Public()
   @Get()
   async findAll(): Promise<Chapter[]> {
     return await this.chapterService.findAll();

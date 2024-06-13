@@ -1,5 +1,5 @@
-// CourseListView.tsx
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Импортируем useNavigate для перенаправления
 import axiosInstance from "../../axiosConfig";
 import { Button, Modal, Form } from "react-bootstrap";
 import { ICourse } from "../Courses/ICourse";
@@ -11,6 +11,8 @@ const CourseListView: React.FC = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
   const [authors, setAuthors] = useState<{ [key: string]: string }>({});
+
+  const navigate = useNavigate(); // Используем useNavigate для перенаправления
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -71,6 +73,10 @@ const CourseListView: React.FC = () => {
     }
   };
 
+  const handleCourseClick = (id: number) => {
+    navigate(`/course/${id}`); // Перенаправляем на страницу курса с заданным id
+  };
+
   return (
     <div>
       <div>
@@ -106,6 +112,7 @@ const CourseListView: React.FC = () => {
                 <button
                   className="index-course-list-element btn btn-primary"
                   key={course.id}
+                  onClick={() => handleCourseClick(course.id)} // Добавляем обработчик нажатия
                 >
                   <h5>{course.name}</h5>
                   <div className="index-course-list-element-inside">

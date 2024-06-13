@@ -8,9 +8,15 @@ interface Props {
   showForm: boolean;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   chapterId: number | null;
+  courseId: number | undefined;
 }
 
-const CreateTask: React.FC<Props> = ({ showForm, setShowForm, chapterId }) => {
+const CreateTask: React.FC<Props> = ({
+  showForm,
+  setShowForm,
+  chapterId,
+  courseId,
+}) => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [inputData, setInputData] = useState("");
@@ -21,9 +27,9 @@ const CreateTask: React.FC<Props> = ({ showForm, setShowForm, chapterId }) => {
     const taskData = {
       name: taskName,
       description: taskDescription,
-      input: inputData || null, // Установите null, если поле пустое
-      output: outputData || null, // Установите null, если поле пустое
-      chapterId: chapterId, // Убедитесь, что передается правильный chapterId
+      input: inputData || null,
+      output: outputData || null,
+      chapterId: chapterId,
     };
 
     try {
@@ -32,14 +38,30 @@ const CreateTask: React.FC<Props> = ({ showForm, setShowForm, chapterId }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      updateCourseTotalTasks(courseId);
       setShowForm(false);
-      // Сброс формы
       setTaskName("");
       setTaskDescription("");
       setInputData("");
       setOutputData("");
     } catch (error) {
       console.error("Error creating task:", error);
+    }
+  };
+
+  const updateCourseTotalTasks = async (courseId: number | undefined) => {
+    try {
+      await axiosInstance.put(
+        `api/courses/updateTotalTasks/${courseId}`,
+        { increment: 1 }, // Указываем, что нужно увеличить TotalTasks на 1
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error updating course total tasks:", error);
     }
   };
 

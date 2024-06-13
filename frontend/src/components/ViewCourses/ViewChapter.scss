@@ -1,0 +1,69 @@
+.body-view-chapter{
+    background: rgb(18,22,27);
+    background: linear-gradient(90deg, rgb(32, 39, 48) 0%, rgba(31,40,51,1) 50%, rgba(54,78,106,1) 100%);
+    min-height: 100vh;
+    display: flex;
+    padding: 20px;
+    // align-items: center;
+    // justify-content: center;
+}
+  
+.main-view-chapter{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+    color: white;
+}
+
+.chapter-header{
+    padding: 20px;
+    background-color: rgb(2, 37, 53);
+    border-radius: 20px;
+}
+
+.task-description{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: rgb(2, 37, 53);
+    border-radius: 20px;
+    max-width: 60%;
+}
+
+
+
+.code-editor-view-input-output{
+    color: white;
+    background-color: black;
+    font-family: "Fira code", "Fira Mono", monospace;
+    font-size: 17px;
+    cursor: not-allowed;
+    
+}
+
+.output-solution{
+    margin-top: 20px;
+    display: flex;
+    gap: 30px;
+    border-bottom: 2px solid rgb(2, 37, 53);
+}
+
+
+.code-editor-view-solution{
+    color: black;
+    background-color: white;
+    font-family: "Fira code", "Fira Mono", monospace;
+    font-size: 15px;
+    cursor: not-allowed;
+}
+
+.navigation-buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin-inline-start: 10%;
+}

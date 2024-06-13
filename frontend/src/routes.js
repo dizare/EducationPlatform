@@ -8,6 +8,9 @@ import { Title } from './components/Title';
 import { Courses } from "./components/Profile/Courses";
 import { CreateCourse } from "./components/Courses/CreateCourse";
 import { EditingCourse } from './components/Courses/EditingCourse';
+import ViewCourse from './components/ViewCourses/ViewCourse';
+import ViewChapter from './components/ViewCourses/ViewChapter';
+import ViewTask from './components/ViewCourses/ViewTask';
 
 export const useRoutes = (isLogin) => {
 
@@ -24,6 +27,10 @@ export const useRoutes = (isLogin) => {
                 <Route>
                     <Route path="/create-course" element={<CreateCourse />} />
                     <Route path="/editcourse/:id" element={<EditingCourse />} />
+                    <Route path="/course/:id" element={<ViewCourse />} />
+                    <Route path="/course/:courseId/chapter/:chapterId" element={<ViewChapter />}>
+                        <Route path="task/:taskId" element={<ViewTask />} />
+                    </Route>
                 </Route>
                 <Route path='*' element={<Navigate to="/profile/" replace />} />
 

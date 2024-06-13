@@ -30,7 +30,19 @@ export class CourseController {
   @Get('course/:id')  
   async editCourse(@Param('id') id: string): Promise<Course> {
     return this.courseService.findOneById(Number(id));
-}
+ }
+
+  @Public()
+  @Get('courseDetails/:id')
+  async findOneWithDetails(@Param('id') id: string): Promise<Course> {
+    return this.courseService.findOneWithDetails(Number(id));
+  }
+
+  @Public()
+  @Put('updateTotalTasks/:id')
+  async updateTotalTasks(@Param('id') courseId: number, @Body() body: { increment: number }) {
+    return this.courseService.updateTotalTasks(courseId, body.increment);
+  }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() courseDto: CourseDTO): Promise<Course> {
