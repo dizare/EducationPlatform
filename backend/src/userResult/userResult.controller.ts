@@ -25,4 +25,12 @@ export class UserResultController {
   async findByTaskId(@Param('taskId') taskId: number): Promise<UserResult[]> {
     return this.userResultService.findByTaskId(taskId);
   }
+
+  @Get('user/:userId/task/:taskId')
+  async findByUserIdAndTaskId(
+    @Param('userId') userId: number,
+    @Param('taskId') taskId: number,
+  ): Promise<UserResult | null> {
+    return this.userResultService.findByUserIdAndTaskId(userId, taskId);
+  }
 }

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { highlight, languages } from "prismjs";
 import Editor from "react-simple-code-editor";
 import axiosInstance from "../../axiosConfig";
 import { ReactComponent as CorrectSvg } from "./check-square.svg";
 import { ReactComponent as IncorrectSvg } from "./x-square.svg";
+import { authContext } from "../../context/authContext";
 // import "./ViewTask.scss";
 
 interface Task {
@@ -16,13 +17,73 @@ interface Task {
 
 interface ViewTaskProps {
   task: Task;
+  userId: number | null;
 }
 
-const ViewTask: React.FC<ViewTaskProps> = ({ task }) => {
+const ViewTask: React.FC<ViewTaskProps> = ({ task, userId }) => {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [memory, setMemory] = useState("");
   const [cpuTime, setCpuTime] = useState("");
+  const { token } = useContext(authContext);
+
+  useEffect(() => {
+    // Fetch previous results if any
+    const fetchPreviousResult = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `http://localhost:8080/api/user-result/user/${userId}/task/${task.id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        const result = response.data;
+        console.log(response.data);
+
+        if (result) {
+          setCode(result.result.code);
+          setOutput(result.result.output);
+          setMemory(result.result.memorySpent);
+          setCpuTime(result.result.cpuTimeSpent);
+        }
+
+        if (result.result.isSuccess) {
+        }
+      } catch (error) {
+        console.error("Error fetching previous result:", error);
+      }
+    };
+
+    fetchPreviousResult();
+  }, [userId, task.id]);
+
+  const saveResult = async (
+    isSuccess: boolean,
+    output: string,
+    memory: string,
+    cpuTime: string
+  ) => {
+    try {
+      await axiosInstance.post(
+        "http://localhost:8080/api/result/createResult",
+        {
+          resultDTO: {
+            code,
+            isSuccess,
+            output,
+            cpuTimeSpent: cpuTime,
+            memorySpent: memory,
+          },
+          userId,
+          taskId: task.id,
+        }
+      );
+    } catch (error) {
+      console.error("Error saving result:", error);
+    }
+  };
 
   const handleExecute = async () => {
     setOutput("");
@@ -44,12 +105,22 @@ const ViewTask: React.FC<ViewTaskProps> = ({ task }) => {
         }
       );
 
-      setOutput(response.data.output);
+      const resultOutput = response.data.output;
 
-      if (response.data.output.trim() === task.output.trim()) {
+      setOutput(resultOutput);
+
+      const isSuccess = resultOutput.trim() === task.output.trim();
+      if (isSuccess) {
         setMemory(response.data.memory);
         setCpuTime(response.data.cpuTime);
       }
+
+      await saveResult(
+        isSuccess,
+        resultOutput,
+        response.data.memory,
+        response.data.cpuTime
+      );
     } catch (error) {
       console.error("Error executing code:", error);
       setOutput("Error executing code");

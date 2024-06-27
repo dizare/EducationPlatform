@@ -11,11 +11,11 @@ export class UserResult {
   @ManyToOne(() => User, user => user.id)
   user: User;
 
-  @OneToOne(() => Task, task => task.id)
-  @JoinColumn()
+  @ManyToOne(() => Task, task => task.id)
+
   task: Task;
 
-  @OneToOne(() => Result, result => result.id)
-  @JoinColumn()
+  @ManyToOne(() => Result, result => result.id)
+
   result: Result;
 }

@@ -5,6 +5,8 @@ import "./ViewChapter.scss";
 import "./ViewCourse.scss";
 import ViewTask from "./ViewTask";
 import Sidebar from "./Sidebar";
+import { IUser } from "../Profile/IUser";
+import useCurrentUserId from "../../hooks/currentUserId"; // Импортируем наш хук
 
 interface Task {
   id: number;
@@ -38,6 +40,7 @@ const ViewChapter: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const course = location.state.course as Course;
+  const userId = useCurrentUserId();
 
   useEffect(() => {
     const fetchChapterData = async () => {
@@ -66,8 +69,9 @@ const ViewChapter: React.FC = () => {
         currentChapterIndex < course.chapters.length - 1
       ) {
         const nextChapterId = course.chapters[currentChapterIndex + 1].id;
+        setCurrentTaskIndex(0);
         navigate(`/course/${courseId}/chapter/${nextChapterId}`, {
-          state: { course },
+          state: { course, userId },
         });
       } else {
         navigate("/profile");
@@ -85,7 +89,7 @@ const ViewChapter: React.FC = () => {
       if (currentChapterIndex > 0) {
         const previousChapterId = course.chapters[currentChapterIndex - 1].id;
         navigate(`/course/${courseId}/chapter/${previousChapterId}`, {
-          state: { course },
+          state: { course, userId },
         });
       } else {
         console.log("No previous chapters in this course.");
@@ -95,7 +99,6 @@ const ViewChapter: React.FC = () => {
 
   return (
     <div className="body-view-chapter">
-      {/* <Sidebar courseId={courseId} chapters={course.chapters} /> */}
       <div className="main-view-chapter">
         {chapter ? (
           <div>
@@ -107,6 +110,7 @@ const ViewChapter: React.FC = () => {
               <ViewTask
                 key={chapter.tasks[currentTaskIndex].id}
                 task={chapter.tasks[currentTaskIndex]}
+                userId={userId}
               />
             ) : (
               <p>No tasks available.</p>

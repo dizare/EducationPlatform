@@ -25,4 +25,11 @@ export class UserResultService {
   async findByTaskId(taskId: number): Promise<UserResult[]> {
     return this.userResultRepository.find({ where: { task: { id: taskId } }, relations: ['user', 'task', 'result'] });
   }
+
+  async findByUserIdAndTaskId(userId: number, taskId: number): Promise<UserResult | null> {
+    return this.userResultRepository.findOne({
+      where: { user: { id: userId }, task: { id: taskId } },
+      relations: ['user', 'task', 'result'],
+    });
+  }
 }
